@@ -7,7 +7,10 @@ authors = [
     { name = "vToshio", email = "vtoshio2004@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "fastapi[standard]>=0.141.1",
+    "pydantic-settings>=2.15.0",
+]
 
 [project.scripts]
 auth-api = "auth_api:main"
