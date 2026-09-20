@@ -1,9 +1,10 @@
 from fastapi import FastAPI
+from fastapi.exceptions import HTTPException
 
-from .shared.domain.enums import ApplicationEnvironment
 from .shared.infrastructure.settings import settings
 from .shared.infrastructure.resources import lifespan
 from .shared.presentation.routes import routers
+from .shared.presentation.handlers import http_exception_handler, internal_exception_handler
 
 app = FastAPI(
     debug=settings.debug,
@@ -17,3 +18,5 @@ app = FastAPI(
 for router in routers:
     app.include_router(router)
 
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(Exception, internal_exception_handler)
