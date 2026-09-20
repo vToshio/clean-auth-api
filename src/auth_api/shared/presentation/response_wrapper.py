@@ -1,6 +1,7 @@
 from collections.abc import Callable
 from fastapi import Request, Response
 from fastapi.routing import APIRoute
+from ..infrastructure.utils import utc_now_iso
 import json
 
 class ResponseWrapper(APIRoute):
@@ -15,6 +16,7 @@ class ResponseWrapper(APIRoute):
                 'code': response.status_code,
                 'method': request.method,
                 'path': request.url.path,
+                'requested_at': utc_now_iso(),
                 'details': { 
                     'message': 'Successfull request.', 
                     'data': body

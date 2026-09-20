@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional, Generic, TypeVar
+from ..infrastructure.utils import utc_now_iso
 
 T = TypeVar('T')
 
@@ -50,6 +51,12 @@ class BaseResponse(BaseModel, Generic[T]):
         description='URI path for the requested endpoint.',
         pattern=r'^/.*$',
         examples=['/api/products', '/healthcheck']
+    )
+    requested_at: str = Field(
+        title='Requested at',
+        description='ISO8601 based timestamp of the request time localized by timezone.',
+        examples=['2026-09-20T22:18:54.526724+00:00'],
+        default_factory=utc_now_iso,
     )
     details: DetailResponse[T] = Field(
         title='Response details (optional)',
